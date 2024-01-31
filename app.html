@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="web/output.css">
+    <title>Lifeline</title>
+</head>
+
+<body class="flex flex-col justify-between items-center h-screen w-full p-6">
+    <div class="ring-4 ring-gray-200 py-4 px-4 w-full rounded-xl h-1/2">
+        <b id="t-query" class="text-2xl"></b>
+        <p id="t-answer" class="text-lg"></p>
+    </div>
+
+    <div class="w-full flex flex-col items-center justify-center gap-4">
+        <input id="i-query" class="text-lg bordered w-full" type="text" placeholder="Type your query here...">
+        <div class="flex gap-4 justify-center items-center w-full">
+            <button id="b-clear" class="font-semibold text-xl w-1/4 red">Clear</button>
+            <button id="b-ask" class="font-semibold text-xl w-3/4">Ask</button>
+        </div>
+    </div>
+</body>
+
+<script lang="js">
+    let nodeQuery = document.getElementById("t-query");
+    let nodeAnswer = document.getElementById("t-answer");
+    let nodeInput = document.getElementById("i-query");
+    let nodeAsk = document.getElementById("b-ask");
+    let nodeClear = document.getElementById("b-clear");
+
+    nodeAsk.onclick = (t, e) => {
+        let socket = new WebSocket("ws://localhost:8000/ws");
+        nodeQuery.innerText = nodeInput.value;
+        nodeAnswer.innerHTMl = "";
+
+        socket.onopen = function (e) {
+            console.log("Connection established!");
+            socket.send(nodeInput.value);
+        };
+
+        socket.onmessage = function (event) {
+            console.log(`Data received: ${event.data}`);
+            nodeAnswer.innerHTML += event.data;
+        };
+
+        socket.onclose = function (event) {
+            if (event.wasClean) {
+                console.log(`Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+            } else {
+                console.warn('Connection died');
+            }
+        };
+    };
+
+    nodeClear.onclick = function () {
+        nodeInput.value = "";
+    };
+</script>
+
+</html>

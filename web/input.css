@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    }
+
+    * {
+        @apply outline-none;
+    }
+}
+
+@layer components {
+    input {
+        @apply bg-gray-50 px-6 py-4 rounded-xl;
+
+        &.bordered {
+            @apply border-gray-400 border-4 border-opacity-30;
+        }
+
+        &:focus {
+            @apply border-opacity-60;
+        }
+    }
+
+    button {
+        @apply transition py-4 rounded-xl
+        bg-cyan-500 bg-opacity-30 text-cyan-600;
+
+        &.red {
+            @apply bg-red-600 bg-opacity-30 text-red-600;
+        }
+
+        &:active {
+            @apply scale-95;
+        }
+    }
+}

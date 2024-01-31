@@ -1,0 +1,3 @@
+tasks:
+    run:
+        - npx tailwindcss -i ./web/input.css -o ./web/output.css --watch
