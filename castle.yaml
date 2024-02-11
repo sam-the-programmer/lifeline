@@ -1,3 +1,7 @@
 tasks:
-    run:
+    css:
         - npx tailwindcss -i ./web/input.css -o ./web/output.css --watch
+    demo:
+        - uvicorn demo:app --reload
+    ai:
+        - uvicorn ai:app --reload
