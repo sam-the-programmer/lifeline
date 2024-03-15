@@ -57,9 +57,6 @@ def load_nearest(s):
         return file.read()
 
 
-# https://python.langchain.com/docs/expression_language/streaming
-
-
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: fastapi.WebSocket):
     await websocket.accept()
