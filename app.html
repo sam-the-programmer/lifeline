@@ -30,6 +30,17 @@
     let nodeAsk = document.getElementById("b-ask");
     let nodeClear = document.getElementById("b-clear");
 
+    let synth = speechSynthesis;
+    let voices = synth.getVoices();
+    console.log(voices)
+
+    // on enter, click nodeAsk
+    document.addEventListener("keypress", (ev) => {
+        if (ev.key === "Enter") {
+            nodeAsk.click();
+        }
+    })
+
     nodeAsk.onclick = (t, e) => {
         let socket = new WebSocket("ws://localhost:8000/ws");
         nodeQuery.innerText = nodeInput.value;
@@ -51,6 +62,10 @@
             } else {
                 console.warn('Connection died');
             }
+
+            let utter = new SpeechSynthesisUtterance(nodeAnswer.innerHTML);
+            utter.pitch = 3;
+            synth.speak(utter)
         };
     };
 
